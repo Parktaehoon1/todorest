@@ -9,7 +9,7 @@
       placeholder="Search"
     />
     <!-- 할일입력 -->
-    <TodoForm @add-todo="addTodo" />
+    <TodoForm @add-todo="addTodo" style="margin-top: 10px" />
     <!-- 서버에러 출력 -->
     <div style="color: red">{{ error }}</div>
     <!-- 목록없음 안내 -->
@@ -20,21 +20,52 @@
       @delete-todo="deleteTodo"
       @toggle-todo="toggleTodo"
     />
+    <!-- Pagination -->
+    <Pagination :page="page" :totalpage="totalPage" @getTodo="getTodo" />
   </div>
 </template>
 <script>
 import axios from "axios";
-import { computed, ref } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 import TodoForm from "./components/TodoSimpleForm.vue";
 import TodoList from "./components/TodoList.vue";
+import Pagination from "./components/PaginationView.vue";
 export default {
   components: {
     TodoForm,
     TodoList,
+    Pagination,
   },
   setup() {
     const todos = ref([]);
+    //Pagination 구현
+    // 전체목록수
+    const totalCount = ref(0);
+    // 페이지당 보여줄 개수
+    const limit = 5;
+    // 현재 페이지
+    const page = ref(1);
+    // 총 페이지 수
+    const totalPage = computed(() => {
+      return Math.ceil(totalCount.value / limit);
+    });
+
     const searchText = ref("");
+
+    // ref, reactive, computed, props 등이 변경될때 마다 실행
+    // watchEffect 를 사용합니다.
+    watchEffect(() => {
+      // console.log(page.value);
+      // console.log(totalCout.value);
+      // console.log(filterTodos.value);
+      // console.log(totalPage.value);
+    });
+
+    watch(searchText, () => {
+      // 검색 기능은 추후 보완할 예정~!
+      // getTodo(1);
+    });
+
     const filterTodos = computed(() => {
       if (searchText.value) {
         return todos.value.filter((todo) => {
@@ -44,10 +75,18 @@ export default {
       return todos.value;
     });
 
-    const getTodo = async () => {
+    const getTodo = async (nowPage = page.value) => {
       try {
-        const response = await axios.get("http://localhost:3000/todos");
+        const response = await axios.get(
+          `http://localhost:3000/todos?_page=${nowPage}&_limit=${limit}`
+        );
         todos.value = response.data;
+
+        console.log(response.headers);
+        // 총 목록수
+        totalCount.value = response.headers["x-total-count"];
+        console.log(totalCount.value);
+        page.value = nowPage;
       } catch (err) {
         error.value = "서버 목록 호출에 실패했습니다. 잠시 뒤 이용해주세요.";
       }
@@ -64,6 +103,8 @@ export default {
           complete: todo.complete,
         });
         todos.value.push(todo);
+        // 목록이 갱신 됐으니까 1페이지로 이동, 안하면 데이터 꼬일수도있다
+        getTodo(1);
       } catch (err) {
         error.value = "서버 데이터 저장 실패";
       }
@@ -76,6 +117,8 @@ export default {
         const id = todos.value[index].id;
         await axios.delete("http://localhost:3000/todos/" + id);
         todos.value.splice(index, 1);
+        // 목록이 갱신 됐으니까 1페이지로 이동, 안하면 데이터 꼬일수도있다
+        getTodo(page.value);
       } catch (err) {
         error.value = "삭제 요청이 거부되었습니다.";
       }
@@ -104,6 +147,9 @@ export default {
       searchText,
       filterTodos,
       error,
+      totalPage,
+      page,
+      getTodo,
     };
   },
 };
