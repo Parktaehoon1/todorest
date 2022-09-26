@@ -1,15 +1,17 @@
 <template>
   <div class="container">
     <h2>Todo List</h2>
-    <!-- todo serach form -->
+    <!-- 할일검색폼 -->
     <input
       class="form-control"
       type="text"
       v-model="searchText"
       placeholder="Search"
     />
-    <!-- 할입 입력창 -->
+    <!-- 할일입력 -->
     <TodoForm @add-todo="addTodo" />
+    <!-- 서버에러 출력 -->
+    <div style="color: red">{{ error }}</div>
     <!-- 목록없음 안내 -->
     <div v-if="!todos.length">추가된 Todo가 없습니다.</div>
     <!-- 할일목록 -->
@@ -21,6 +23,7 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 import { computed, ref } from "vue";
 import TodoForm from "./components/TodoSimpleForm.vue";
 import TodoList from "./components/TodoList.vue";
@@ -30,12 +33,7 @@ export default {
     TodoList,
   },
   setup() {
-    const todos = ref([
-      { id: 1, subject: "할일목록 1", complete: false },
-      { id: 2, subject: "할일목록 2", complete: false },
-      { id: 3, subject: "할일목록 3", complete: false },
-    ]);
-
+    const todos = ref([]);
     const searchText = ref("");
     const filterTodos = computed(() => {
       if (searchText.value) {
@@ -46,14 +44,56 @@ export default {
       return todos.value;
     });
 
-    const addTodo = (todo) => {
-      todos.value.push(todo);
+    const getTodo = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/todos");
+        todos.value = response.data;
+      } catch (err) {
+        error.value = "서버 목록 호출에 실패했습니다. 잠시 뒤 이용해주세요.";
+      }
     };
-    const deleteTodo = (index) => {
-      todos.value.splice(index, 1);
+
+    getTodo();
+
+    const error = ref("");
+    const addTodo = async (todo) => {
+      try {
+        await axios.post("http://localhost:3000/todos", {
+          id: todo.id,
+          subject: todo.subject,
+          complete: todo.complete,
+        });
+        todos.value.push(todo);
+      } catch (err) {
+        error.value = "서버 데이터 저장 실패";
+      }
     };
-    const toggleTodo = (index) => {
-      todos.value[index].complete = !todos.value[index].complete;
+
+    const deleteTodo = async (index) => {
+      try {
+        // 현재 index 는 인덱스 번호 0,1,2,3,4 가 전송된다.
+        // 실제 저장되어 있는 id를 파악한다.
+        const id = todos.value[index].id;
+        await axios.delete("http://localhost:3000/todos/" + id);
+        todos.value.splice(index, 1);
+      } catch (err) {
+        error.value = "삭제 요청이 거부되었습니다.";
+      }
+    };
+
+    const toggleTodo = async (index) => {
+      try {
+        // 어느 데이터를 수정할 것인가를 전달
+        // 업데이트 할 내용을 전달한다.
+        const id = todos.value[index].id;
+        const complete = !todos.value[index].complete;
+        await axios.patch("http://localhost:3000/todos/" + id, {
+          complete,
+        });
+        todos.value[index].complete = complete;
+      } catch (err) {
+        error.value = "업데이트에 실패하였습니다.";
+      }
     };
 
     return {
@@ -63,6 +103,7 @@ export default {
       toggleTodo,
       searchText,
       filterTodos,
+      error,
     };
   },
 };
