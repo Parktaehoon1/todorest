@@ -9,9 +9,9 @@ export default {
 </script>
 
 <style scoped>
-h2 {
+.title {
   text-align: center;
   font-size: 50px;
-  color: blue;
+  color: darkgray;
 }
 </style>

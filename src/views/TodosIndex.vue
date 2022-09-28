@@ -42,7 +42,7 @@ export default {
     HeaderTitle,
   },
   setup() {
-    const title = "TODO LIST";
+    const title = "todolist";
     const todos = ref([]);
     //Pagination 구현
     // 전체목록수
@@ -171,7 +171,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .todostyle {
   text-decoration: line-through;
   color: gray;

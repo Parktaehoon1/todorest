@@ -3,7 +3,7 @@
     {
       "id": 1664240333437,
       "subject": "1교시",
-      "complete": false
+      "complete": true
     },
     {
       "id": 1664240334726,
@@ -81,39 +81,9 @@
       "complete": false
     },
     {
-      "id": 1664240958030,
-      "subject": "17교시",
-      "complete": false
-    },
-    {
-      "id": 1664240960809,
-      "subject": "18교시",
-      "complete": false
-    },
-    {
-      "id": 1664240962513,
-      "subject": "19교시",
-      "complete": false
-    },
-    {
-      "id": 1664240964207,
-      "subject": "20교시",
-      "complete": false
-    },
-    {
-      "id": 1664243206453,
-      "subject": "21교시",
-      "complete": false
-    },
-    {
-      "id": 1664243208650,
-      "subject": "22교시",
-      "complete": false
-    },
-    {
-      "id": 1664243210231,
-      "subject": "23교시",
-      "complete": false
+      "subject": "17교시 / 점심 먹었어요",
+      "complete": true,
+      "id": 1664240958030
     }
   ]
 }
