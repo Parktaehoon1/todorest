@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(item, index) in todos" v-bind:key="index" class="card mt-2">
-      <div class="card-body p-2 d-flex" @click="moveToPage(item.id)">
+      <div class="card-body p-2 d-flex">
         <div class="form-check flex-grow-1 align-items-center">
           <input
             type="checkbox"
@@ -10,6 +10,7 @@
             @change="toggleTodo(index)"
           />
           <label
+            @click="moveToPage(item.id)"
             class="form-check-label"
             v-bind:class="{ todostyle: item.complete }"
             >{{ item.subject }}
@@ -31,9 +32,7 @@ export default {
   props: ["todos"],
   emits: ["delete-todo", "toggle-todo"],
   setup(props, { emit }) {
-    // console.log(props.todos[0].id);
     const deleteTodo = (index) => {
-      console.log(index);
       emit("delete-todo", index);
     };
     const toggleTodo = (index) => {
@@ -42,13 +41,12 @@ export default {
 
     const router = useRouter();
     const moveToPage = (id) => {
-      // 라우터를 이용해서 id를 전송해준다.
+      // router 를 이용해서 id 를 전송해준다.
       // router.push(`/todos/${id}`);
       router.push({
         name: "Todo",
         params: {
           id,
-          // router 에서 :id 로 변수로 넘겨준게 있어서 params으로 받음
         },
       });
     };

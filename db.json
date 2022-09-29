@@ -1,89 +1,22 @@
 {
   "todos": [
     {
-      "id": 1664240333437,
       "subject": "1교시",
-      "complete": true
+      "complete": false,
+      "body": "1교시\n",
+      "id": 1
     },
     {
-      "id": 1664240334726,
       "subject": "2교시",
-      "complete": false
+      "complete": false,
+      "body": "2교시",
+      "id": 2
     },
     {
-      "id": 1664240336017,
       "subject": "3교시",
-      "complete": false
-    },
-    {
-      "id": 1664240337565,
-      "subject": "4교시",
-      "complete": false
-    },
-    {
-      "id": 1664240339036,
-      "subject": "5교시",
-      "complete": false
-    },
-    {
-      "id": 1664240340991,
-      "subject": "6교시",
-      "complete": false
-    },
-    {
-      "id": 1664240436481,
-      "subject": "7교시",
-      "complete": false
-    },
-    {
-      "id": 1664240822425,
-      "subject": "8rytl",
-      "complete": false
-    },
-    {
-      "id": 1664240825491,
-      "subject": "9교시",
-      "complete": false
-    },
-    {
-      "id": 1664240827052,
-      "subject": "10교시",
-      "complete": false
-    },
-    {
-      "id": 1664240829014,
-      "subject": "11교시",
-      "complete": false
-    },
-    {
-      "id": 1664240830137,
-      "subject": "12교시",
-      "complete": false
-    },
-    {
-      "id": 1664240832059,
-      "subject": "13교시",
-      "complete": false
-    },
-    {
-      "id": 1664240833340,
-      "subject": "14교시",
-      "complete": false
-    },
-    {
-      "id": 1664240835641,
-      "subject": "15교시",
-      "complete": false
-    },
-    {
-      "id": 1664240838635,
-      "subject": "16교시",
-      "complete": false
-    },
-    {
-      "subject": "17교시 / 점심 먹었어요",
-      "complete": true,
-      "id": 1664240958030
+      "complete": false,
+      "body": "3교시",
+      "id": 3
     }
   ]
 }

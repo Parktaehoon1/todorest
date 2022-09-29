@@ -16,9 +16,7 @@ export default {
       default: "success",
     },
   },
-  setup() {
-    return {};
-  },
+  setup() {},
 };
 </script>
 
