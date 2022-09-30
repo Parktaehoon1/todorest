@@ -87,6 +87,7 @@ export default {
     const getTodo = async () => {
       loading.value = true;
       try {
+        console.log(route.params.id); // 값 받아옴
         const response = await axios.get(
           `http://localhost:3000/todos/${route.params.id}`
         );
