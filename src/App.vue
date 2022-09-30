@@ -1,5 +1,22 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="p-2 bg-dark d-flex">
+    <div
+      style="width: 6px; height: 6px; cursor: pointer"
+      class="ml-2 bg-danger rounded-circle"
+      @click="sorry"
+    ></div>
+    <div
+      style="width: 6px; height: 6px; cursor: pointer"
+      class="ml-2 bg-warning rounded-circle cursor-pointer"
+      @click="sorry"
+    ></div>
+    <div
+      style="width: 6px; height: 6px cursor: pointer"
+      class="ml-2 bg-success rounded-circle"
+      @click="sorry"
+    ></div>
+  </div>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
       <RouterLink class="navbar-brand" :to="{ name: 'Home' }"
         >My Todo</RouterLink
@@ -68,9 +85,13 @@
     @delete-todo-toast="deleteTodoToast"
     @delete-todo-fail-toast="deleteTodoFailToast"
   />
-  <ToastBox v-if="showToast" :message="toastMessage" :color="toastType" />
+
+  <Transition name="fade">
+    <ToastBox v-if="showToast" :message="toastMessage" :color="toastType" />
+  </Transition>
 </template>
 <script>
+// App.vue 에서 emit값 다 처리할 예정이라 여기서 toast 받는다.
 import ToastBox from "@/components/ToastBox.vue";
 import { useToast } from "@/composables/toast";
 export default {
@@ -78,7 +99,10 @@ export default {
     ToastBox,
   },
   setup() {
-    // 안내창 관련
+    const sorry = () => {
+      alert("죄송합니다. 구현예정입니다.");
+    };
+    // 안내창 관련 composables 에 useToast 받는다.
     const { showToast, toastMessage, toastType, triggerToast } = useToast();
 
     const updateTodoToast = () => {
@@ -110,6 +134,8 @@ export default {
     };
 
     return {
+      sorry,
+
       updateTodoToast,
       newTodoToast,
       updateLoadFailToast,
@@ -128,7 +154,27 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 #app {
+}
+nav {
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all opacity 1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.fade-enter-to,
+.faed-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
