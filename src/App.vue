@@ -94,6 +94,7 @@
 // App.vue 에서 emit값 다 처리할 예정이라 여기서 toast 받는다.
 import ToastBox from "@/components/ToastBox.vue";
 import { useToast } from "@/composables/toast";
+
 export default {
   components: {
     ToastBox,

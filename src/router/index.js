@@ -68,15 +68,12 @@ const router = createRouter({
 // 회원가입 가드
 router.beforeEach((to, from, next) => {
   const currentUser = store.state.user;
-  console.log(currentUser);
   const requireAuth = to.matched.some((record) => record.requireAuth);
+  console.log("currentuserDat", currentUser);
   console.log("requireAuth", requireAuth);
-  console.log("auth값", requireAuth);
-  if (requireAuth && !currentUser) {
-    next("/login");
-  } else {
-    next();
-  }
+  if (requireAuth && !currentUser) next("/login");
+  else next();
+
   console.log(to);
   console.log(from);
   // router.push("/login");

@@ -53,10 +53,6 @@ export default {
           username: username.value,
           email: email.value,
           profile_image_url: "/profile.jpeg",
-          num_tweets: 0,
-          followers: [],
-          followings: [],
-          created_at: Date.now(),
         });
         alert("회원 가입에 성공하셨습니다. 로그인 해주세요.");
         router.push("/login");
