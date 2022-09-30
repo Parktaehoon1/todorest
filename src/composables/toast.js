@@ -24,7 +24,7 @@ export const useToast = () => {
     clearTimeout(toastTimer.value);
     // console.log("onUnmounted");
   });
-
+  // lifecycle
   return {
     showToast,
     toastMessage,
