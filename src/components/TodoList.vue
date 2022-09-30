@@ -4,12 +4,14 @@
       <div class="card-body p-2 d-flex">
         <div class="form-check flex-grow-1 align-items-center">
           <input
+            style="cursor: pointer"
             type="checkbox"
             class="form-check-input"
             :checked="item.complete"
             @change="toggleTodo(index)"
           />
           <label
+            style="cursor: pointer"
             @click="moveToPage(item.id)"
             class="form-check-label"
             v-bind:class="{ todostyle: item.complete }"

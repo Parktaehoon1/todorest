@@ -1,5 +1,23 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <!-- routerlink가 모여있는 곳이 부모 -->
+  <div class="p-2 bg-dark d-flex">
+    <div
+      style="width: 6px; height: 6px; cursor: pointer"
+      class="ml-2 bg-danger rounded-circle"
+      @click="sorry"
+    ></div>
+    <div
+      style="width: 6px; height: 6px; cursor: pointer"
+      class="ml-2 bg-warning rounded-circle cursor-pointer"
+      @click="sorry"
+    ></div>
+    <div
+      style="width: 6px; height: 6px cursor: pointer"
+      class="ml-2 bg-success rounded-circle"
+      @click="sorry"
+    ></div>
+  </div>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
       <RouterLink class="navbar-brand" :to="{ name: 'Home' }"
         >My Todo</RouterLink
@@ -57,10 +75,28 @@
       </div>
     </div>
   </nav>
+  <!-- routerlink는 이동의 수단 routerview는 보여줌의 수단 -->
   <RouterView />
 </template>
-<script></script>
+<script>
+export default {
+  setup() {
+    const sorry = () => {
+      alert("죄송합니다. 구현예정입니다.");
+    };
+
+    return {
+      sorry,
+    };
+  },
+};
+</script>
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
 #app {
+}
+nav {
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
 }
 </style>

@@ -176,6 +176,7 @@ export default {
     const { showToast, toastMessage, toastType, triggerToast } = useToast();
 
     const router = useRouter();
+    // moveToCreate 누르면 router.push page이동
     const moveToCreate = () => {
       router.push({
         name: "TodoCreate",
