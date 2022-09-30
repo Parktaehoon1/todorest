@@ -6,6 +6,9 @@ import ProfileIndex from "@/views/ProfileIndex.vue";
 import AboutIndex from "@/views/AboutIndex.vue";
 import TodoCreate from "@/views/TodoCreate.vue";
 
+import RegisterView from "@/views/RegisterView";
+import LoginView from "@/views/LoginView";
+
 const routes = [
   {
     path: "/",
@@ -36,6 +39,16 @@ const routes = [
     path: "/create",
     name: "TodoCreate",
     component: TodoCreate,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: RegisterView,
   },
 ];
 
