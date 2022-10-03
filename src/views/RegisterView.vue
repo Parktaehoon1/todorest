@@ -1,19 +1,31 @@
 <template>
-  <div class="d-flex flex-column align-items-center mb-3 W-10 registerform">
-    <span class="text-2xl font-bold">TODO 회원가입</span>
-    <input v-model="username" type="text" placeholder="아이디" />
-    <input v-model="email" type="text" placeholder="이메일" />
-    <input
-      @keyup.enter="onRegister"
-      v-model="password"
-      type="password"
-      placeholder="비밀번호"
-    />
-    <button v-if="loading">회원가입 중 입니다.</button>
-    <button v-if="!loading" @click="onRegister">회원가입</button>
-    <router-link to="/login">
-      <button class="text-primary">계정이 이미 있으신가요? 로그인 하기</button>
-    </router-link>
+  <div class="d-flex flex-column justify-content-center mb-3 W-5 registerform">
+    <span class="text-center h3">TODO 회원가입</span>
+    <div class="register-inner-form">
+      <input v-model="username" type="text" placeholder="아이디" />
+      <input v-model="email" type="text" placeholder="이메일" />
+      <input
+        @keyup.enter="onRegister"
+        v-model="password"
+        type="password"
+        placeholder="비밀번호"
+      />
+      <button v-if="loading" class="border-0 m-2 py-2 px-4 bg-light">
+        회원가입 중 입니다.
+      </button>
+      <button
+        v-if="!loading"
+        @click="onRegister"
+        class="border-0 m-2 py-2 px-4 bg-light"
+      >
+        회원가입
+      </button>
+      <router-link :to="{ name: 'login' }">
+        <button class="text-primary border-0 bg-transparent">
+          계정이 이미 있으신가요? 로그인 하기
+        </button>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -55,7 +67,7 @@ export default {
           profile_image_url: "/profile.jpeg",
         });
         alert("회원 가입에 성공하셨습니다. 로그인 해주세요.");
-        router.push("/login");
+        router.push("/");
         // 라우터로 이동
       } catch (err) {
         switch (err.code) {
@@ -97,5 +109,12 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #fff;
+}
+.register-inner-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
 }
 </style>

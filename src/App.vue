@@ -73,6 +73,13 @@
         </ul>
       </div>
     </div>
+
+    <button
+      class="p-3 hover:bg-gray-50 w-full text-left text-sm"
+      @click="onLogout"
+    >
+      {{ currentUser.username }} 계정에서 로그아웃
+    </button>
   </nav>
   <RouterView
     @update-todo-toast="updateTodoToast"
@@ -94,12 +101,29 @@
 // App.vue 에서 emit값 다 처리할 예정이라 여기서 toast 받는다.
 import ToastBox from "@/components/ToastBox.vue";
 import { useToast } from "@/composables/toast";
+import { auth } from "@/firebase";
+import store from "@/store";
+import { computed } from "vue";
+import router from "@/router";
 
 export default {
   components: {
     ToastBox,
   },
   setup() {
+    const currentUser = computed(() => store.state.user);
+    console.log("currentUser", currentUser);
+
+    // const onLogout = async () => {
+    //   try {
+    //     await auth.signOut();
+    //     store.commit("SET_USER", null);
+    //     await router.replace("/login");
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+
     const sorry = () => {
       alert("죄송합니다. 구현예정입니다.");
     };
@@ -134,6 +158,11 @@ export default {
       triggerToast("목록 삭제에 실패하였습니다.", "danger");
     };
 
+    const onLogout = async () => {
+      await auth.signOut();
+      store.commit("SET_USER", null);
+      await router.replace("/login");
+    };
     return {
       sorry,
 
@@ -151,6 +180,8 @@ export default {
       toastMessage,
       toastType,
       triggerToast,
+      currentUser,
+      onLogout,
     };
   },
 };
