@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
   const requireAuth = to.matched.some((record) => record.requireAuth);
   console.log("currentuserDate", currentUser);
   console.log("requireAuth", requireAuth);
-  if (requireAuth && !currentUser) next("/login");
+  if (requireAuth && !currentUser) next("/");
   else next();
 
   console.log(to);

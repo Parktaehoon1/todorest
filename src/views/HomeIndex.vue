@@ -1,10 +1,12 @@
 <template>
-  <Datepicker
-    v-model="date"
-    placeholder="Start Typing ..."
-    textInput
-    :textInputOptions="textInputOptions"
-  />
+  <div class="d-flex">
+    <Datepicker
+      v-model="date"
+      placeholder="Start Typing ..."
+      textInput
+      :textInputOptions="textInputOptions"
+    />
+  </div>
 </template>
 
 <script>
@@ -19,7 +21,6 @@ export default {
     const textInputOptions = ref({
       format: "MM.dd.yyyy",
     });
-
     return {
       date,
       textInputOptions,

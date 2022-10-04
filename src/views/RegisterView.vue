@@ -54,21 +54,14 @@ export default {
           password.value
         );
         const user = credential.user;
-        // const {user} = await auth.createUserWithEmailAndPassword(
-        //   email.value,
-        //   password.value
-        // );
-        // 코드와 동일.
         const doc = USER_COLLECTION.doc(user.uid);
         await doc.set({
           uid: user.uid,
           username: username.value,
           email: email.value,
-          profile_image_url: "/profile.jpeg",
         });
         alert("회원 가입에 성공하셨습니다. 로그인 해주세요.");
         router.push("/");
-        // 라우터로 이동
       } catch (err) {
         switch (err.code) {
           case "auth/invalid-email":
@@ -85,7 +78,6 @@ export default {
             break;
         }
       } finally {
-        // finally는 try가 실행이되든 실패를 하든 실행되는 것
         loading.value = false;
       }
     };
