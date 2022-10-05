@@ -36,12 +36,7 @@
           <slot name="body"></slot>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="onClose">
-            Close
-          </button>
-          <button type="button" class="btn btn-danger" @click="onDelete">
-            Delete
-          </button>
+          <slot name="footer"></slot>
         </div>
       </div>
     </div>
@@ -50,18 +45,15 @@
 
 <script>
 export default {
-  emits: ["close-modal", "delete"],
+  emits: ["close"],
   setup(props, { emit }) {
     const onClose = () => {
-      emit("close-modal", {});
+      emit("close", {});
     };
     const sorry = () => {
       alert("죄송합니다. 구현예정입니다.");
     };
-    const onDelete = () => {
-      emit("delete", {});
-    };
-    return { sorry, onClose, onDelete };
+    return { sorry, onClose };
   },
 };
 </script>

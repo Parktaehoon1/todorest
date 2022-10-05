@@ -58,9 +58,8 @@
     </div>
     <button
       class="w-25 text-right font-weight-bold border-0 bg-transparent text-primary"
-      @click="onLogout"
     >
-      {{ currentUser.username }} 님 logout
+      로그아웃부분
     </button>
   </nav>
 </template>
