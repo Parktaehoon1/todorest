@@ -3,14 +3,21 @@
     <div v-if="loading">Lading ...</div>
     <form v-else @submit.prevent="onSave">
       <div class="row">
+        <!-- 제목 입력 및 수정 영역 -->
         <div class="col-6">
-          <div class="form-group">
+          <InputView
+            label="Todo Subject!"
+            :err="subjectError"
+            :subject="todo.subject"
+            @update-subject="updateSubject"
+          />
+          <!-- <div class="form-group">
             <label>Todo Subject</label>
             <input type="text" class="form-control" v-model="todo.subject" />
             <div v-if="subjectError" style="color: red">{{ subjectError }}</div>
-          </div>
+          </div> -->
         </div>
-        <!-- 내용 수정 -->
+        <!-- 내용 입력 및 수정 -->
         <div v-if="editing" class="col-6">
           <div class="form-group">
             <label>Status</label>
@@ -53,10 +60,14 @@
 <script>
 import { useRoute, useRouter } from "vue-router";
 import { computed, ref } from "vue";
-import axios from "axios";
+import axios from "@/api/axios";
 import _ from "lodash";
+import InputView from "@/components/InputView.vue";
 
 export default {
+  components: {
+    InputView,
+  },
   props: {
     editing: {
       type: Boolean,
@@ -70,6 +81,7 @@ export default {
     "update-todo-fail",
     "new-todo-fail",
     "err-subject",
+    "update-subject",
   ],
   setup(props, { emit }) {
     const route = useRoute();
@@ -88,9 +100,7 @@ export default {
       loading.value = true;
       try {
         console.log(route.params.id); // 값 받아옴
-        const response = await axios.get(
-          `http://localhost:3000/todos/${route.params.id}`
-        );
+        const response = await axios.get(`todos/${route.params.id}`);
         todo.value = { ...response.data };
         originalTodo.value = { ...response.data };
         loading.value = false;
@@ -130,15 +140,12 @@ export default {
         };
         if (props.editing) {
           // 수정 axios 실행
-          res = await axios.put(
-            `http://localhost:3000/todos/${todo.value.id}`,
-            data
-          );
+          res = await axios.put(`todos/${todo.value.id}`, data);
           originalTodo.value = { ...res.data };
           emit("update-todo", {});
         } else {
           // 등록 axios 실행
-          res = await axios.post(`http://localhost:3000/todos`, data);
+          res = await axios.post(`todos`, data);
           todo.value.subject = "";
           todo.value.body = "";
           emit("new-todo", {});
@@ -158,6 +165,10 @@ export default {
       return _.isEqual(todo.value, originalTodo.value);
     });
 
+    const updateSubject = (value) => {
+      todo.value.subject = value;
+    };
+
     return {
       todo,
       loading,
@@ -166,6 +177,7 @@ export default {
       onSave,
       todoState,
       subjectError,
+      updateSubject,
     };
   },
 };
