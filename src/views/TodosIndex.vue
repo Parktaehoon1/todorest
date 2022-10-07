@@ -36,8 +36,9 @@ import { computed, ref, watch, watchEffect } from "vue";
 import TodoList from "@/components/TodoList.vue";
 import PaginationView from "@/components/PaginationView.vue";
 import ErrorBox from "@/components/ErrorBox.vue";
-import { useRouter } from "vue-router";
 import HeaderView from "@/components/HeaderTitie.vue";
+import { useRouter } from "vue-router";
+import { useToast } from "@/composables/toast";
 export default {
   components: {
     TodoList,
@@ -45,17 +46,10 @@ export default {
     ErrorBox,
     HeaderView,
   },
-  emits: [
-    "list-load-fail-toast",
-    "delete-todo-toast",
-    "delete-todo-fail-toast",
-    "update-todo-toast",
-    "update-todo-fail-toast",
-  ],
-  setup(props, { emit }) {
+  setup() {
+    const { triggerToast } = useToast();
     const title = "NOTE";
     const todos = ref([]);
-
     // Pagination 구현
     // 전체목록수
     const totalCout = ref(0);
@@ -113,7 +107,6 @@ export default {
         page.value = nowPage;
       } catch (err) {
         error.value = "서버 목록 호출에 실패했습니다. 잠시 뒤 이용해주세요.";
-        emit("list-load-fail-toast", {});
       }
     };
 
@@ -127,10 +120,11 @@ export default {
         await axios.delete("todos/" + id);
         // 목록이 삭제되면 현재페이지로 이동
         getTodo(page.value);
-        emit("delete-todo-toast");
+        triggerToast("내용이 삭제 되었습니다.", "success");
       } catch (err) {
         error.value = "삭제 요청이 거부되었습니다.";
-        emit("delete-todo-fail-toast");
+        // emit("delete-todo-fail-toast");
+        triggerToast("삭제 요청이 거부되었습니다.", "danger");
       }
     };
 
@@ -145,10 +139,11 @@ export default {
         });
 
         todos.value[index].complete = complete;
-        emit("update-todo-toast");
+        triggerToast("내용이 업데이트 되었습니다.", "success");
       } catch (err) {
         error.value = "업데이트에 실패하였습니다.";
-        emit("update-todo-fail-toast");
+        // emit("update-todo-fail-toast");
+        triggerToast("업데이트에 실패하였습니다.", "danger");
       }
     };
 

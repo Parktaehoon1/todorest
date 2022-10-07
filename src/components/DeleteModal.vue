@@ -16,6 +16,7 @@
 
 <script>
 import ModalWin from "@/components/ModalWin.vue";
+
 export default {
   emits: ["close-modal", "delete"],
   components: { ModalWin },

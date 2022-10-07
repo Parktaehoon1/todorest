@@ -48,7 +48,7 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              href="https://github.com/tarolong2/todorest"
+              href="https://github.com/parktaehoon1"
               target="_blank"
               >Github</a
             >
@@ -58,7 +58,9 @@
     </div>
     <button
       class="w-25 text-right font-weight-bold border-0 bg-transparent text-primary"
+      @click="onLogout"
     >
+      {{ currentUser.username }}
       로그아웃부분
     </button>
   </nav>
@@ -73,10 +75,13 @@ import router from "@/router";
 export default {
   setup() {
     const currentUser = computed(() => store.state.user);
-    console.log("currentUser", currentUser);
+    console.log("onLogout 실행전", currentUser);
     const onLogout = async () => {
+      console.log("onLogout 실행후", currentUser);
       await auth.signOut();
+      console.log("await 실행후", currentUser);
       store.commit("SET_USER", null);
+      console.log("commit 실행후", currentUser);
       await router.replace("/");
     };
 

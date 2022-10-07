@@ -49,11 +49,10 @@ export default {
 
       try {
         loading.value = true;
-        const credential = await auth.createUserWithEmailAndPassword(
+        const { user } = await auth.createUserWithEmailAndPassword(
           email.value,
           password.value
         );
-        const user = credential.user;
         const doc = USER_COLLECTION.doc(user.uid);
         await doc.set({
           uid: user.uid,
