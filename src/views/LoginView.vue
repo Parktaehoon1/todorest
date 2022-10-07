@@ -33,13 +33,14 @@
 import { ref } from "vue";
 import { auth, USER_COLLECTION } from "@/firebase";
 import { useRouter } from "vue-router";
-import store from "@/store/index";
+import { useStore } from "vuex";
 export default {
   setup() {
     const email = ref("");
     const password = ref("");
     const router = useRouter();
     const loading = ref(false);
+    const store = useStore();
 
     const onLogin = async () => {
       if (!email.value || !password.value) {
@@ -55,6 +56,8 @@ export default {
         // get user info
         const doc = await USER_COLLECTION.doc(user.uid).get();
         console.log("commit 전", doc.data());
+        store.dispatch("toast/setUser", doc.data());
+
         store.commit("SET_USER", doc.data());
         console.log("commit 후 ", doc.data());
         router.replace("/home");

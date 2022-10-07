@@ -67,7 +67,7 @@ const router = createRouter({
 
 // 회원가입 가드
 router.beforeEach((to, from, next) => {
-  const currentUser = store.state.toast.setUser;
+  const currentUser = store.state.toast.user;
   const requireAuth = to.matched.some((record) => record.requireAuth);
   console.log("currentuserDate", currentUser);
   console.log("requireAuth", requireAuth);

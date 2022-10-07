@@ -17,8 +17,8 @@ export default {
         commit("REMOVE_TOAST");
       }, 3000);
     },
-    setUser({ commit }) {
-      commit("SET_USER");
+    setUser({ commit }, { email, username, uid }) {
+      commit("SET_USER", { email, username, uid });
     },
   },
   mutations: {

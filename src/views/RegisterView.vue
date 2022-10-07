@@ -33,6 +33,7 @@
 import { ref } from "vue";
 import { auth, USER_COLLECTION } from "@/firebase";
 import { useRouter } from "vue-router";
+
 export default {
   setup() {
     const username = ref("");
@@ -59,6 +60,7 @@ export default {
           username: username.value,
           email: email.value,
         });
+
         alert("회원 가입에 성공하셨습니다. 로그인 해주세요.");
         router.push("/");
       } catch (err) {
