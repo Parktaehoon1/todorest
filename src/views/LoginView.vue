@@ -54,7 +54,7 @@ export default {
         );
         // get user info
         const doc = await USER_COLLECTION.doc(user.uid).get();
-        console.log("dddddddoc", doc.data());
+        console.log("commit 전", doc.data());
         store.commit("SET_USER", doc.data());
         console.log("commit 후 ", doc.data());
         router.replace("/home");

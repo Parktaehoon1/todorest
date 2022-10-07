@@ -74,7 +74,7 @@ import router from "@/router";
 
 export default {
   setup() {
-    const currentUser = computed(() => store.state.user);
+    const currentUser = computed(() => store.state.toast.user);
     console.log("onLogout 실행전", currentUser);
     const onLogout = async () => {
       console.log("onLogout 실행후", currentUser);

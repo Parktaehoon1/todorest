@@ -5,7 +5,7 @@ export default {
     // showToast: false,
     // toastMessage: "",
     // toastType: "",
-    user: null,
+    user: {},
   },
   actions: {
     triggerToast({ commit }, { message, color }) {
@@ -23,6 +23,7 @@ export default {
   },
   mutations: {
     ADD_TOAST(state, payload) {
+      console.log(payload);
       state.toasts.push(payload);
     },
     REMOVE_TOAST(state) {
@@ -32,5 +33,9 @@ export default {
       console.log("pppppppppppayyyyyload", payload);
       state.user = payload;
     },
+    // SET_USER: (state, payload) => {
+    //   console.log("payyyyyyyyloooadd", payload);
+    //   state.user = payload;
+    // },
   },
 };
